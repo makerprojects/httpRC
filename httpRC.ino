@@ -92,7 +92,7 @@ void loop()
   
   // Read the first line of the request
   String sRequest = client.readStringUntil('\r');
-  //Serial.println(sRequest);
+  if (debug) Serial.println(sRequest);
   client.flush();
   
   // stop client, if request is empty
@@ -141,7 +141,7 @@ void loop()
     if(iEqu>=0)
     {
       sCmd = sParam.substring(iEqu+1,sParam.length());
-      // Serial.println(sCmd);
+      if (debug) Serial.println(sCmd);
     }
   }
   
@@ -173,20 +173,20 @@ void loop()
   {
     ulReqcount++;
     sResponse  = "<html><head><title>httpRC</title>";
-    sResponse += "<style>.button{-webkit-border-radius:0px; width:200px; height:1.7em; font-size:2em;}></style>";
+    sResponse += "<style>.button{-webkit-appearance: none; -webkit-border-radius:0px; width:200px; height:1.7em; font-size:2em;}></style>";
+    sResponse += "<meta name=\"viewport\" content=\"width=device-width, user-scalable=no\">";
     sResponse += "</head><body><font color=\"#000000\"><body bgcolor=\"#d0d0f0\">";
-    sResponse += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=yes\">";
-    sResponse += "<div  style=\"position:fixed; left; top: 10%; padding:1%\">";
+    sResponse += "<div  style=\"position:fixed; left; top: 5%; padding:1%\">";
     sResponse += "<a href=\"?pin=fForward\"><button class=\"button\">forward</button></a><a href=\"?pin=fForward\"></div>";
-    sResponse += "<div  style=\"position:fixed; right:0%; top:10%; padding:1%\">";
+    sResponse += "<div  style=\"position:fixed; right:0%; top:5%; padding:1%\">";
     sResponse += "<a href=\"?pin=fLeft\"><button class=\"button\">left</button></a><a href=\"?pin=fLeft\"></div>";
-    sResponse += "<div  style=\"position:fixed; left; top: 40%; padding:1%\">";
+    sResponse += "<div  style=\"position:fixed; left; top: 32%; padding:1%\">";
     sResponse += "<a href=\"?pin=fStop\"><button class=\"button\">stop</button></a><a href=\"?pin=fStop\"></div>";
-    sResponse += "<div  style=\"position:fixed; right:0%; top:40%; padding:1%\">";
+    sResponse += "<div  style=\"position:fixed; right:0%; top:32%; padding:1%\">";
     sResponse += "<a href=\"?pin=fStraight\"><button class=\"button\">straight</button></a><a href=\"?pin=fStraight\"></div>";
-    sResponse += "<div  style=\"position:fixed; left; top: 70%; padding:1%\">";
+    sResponse += "<div  style=\"position:fixed; left; top: 60%; padding:1%\">";
     sResponse += "<a href=\"?pin=fBackward\"><button class=\"button\">backward</button></a><a href=\"?pin=fBackward\"></div>";
-    sResponse += "<div  style=\"position:fixed; right:0%; top:70%; padding:1%\">"; 
+    sResponse += "<div  style=\"position:fixed; right:0%; top:60%; padding:1%\">"; 
     sResponse += "<a href=\"?pin=fRight\"><button class=\"button\">right</button></a><a href=\"?pin=fRight\"></div>";
 
     //////////////////////
@@ -195,7 +195,7 @@ void loop()
     if (sCmd.length()>0)
     {
       // write received command to html page
-      if (debug) sResponse += "Kommando:" + sCmd + "<BR>";
+      // if (debug) sResponse += "Kommando:" + sCmd + "<BR>";
       
       // evaluate commands
       if(sCmd.indexOf("fForward")>=0)
@@ -250,7 +250,7 @@ void loop()
   // Send the response to the client
   client.print(sHeader);
   client.print(sResponse);
-  
+
   // and stop the client
   client.stop();
   if (debug) Serial.println("Client disonnected");
